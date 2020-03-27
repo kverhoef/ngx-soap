@@ -2003,10 +2003,18 @@ WSDL.prototype.objectToXML = function (obj, name, nsPrefix, nsURI, isFirst, xmln
                 }
               }
 
-              value = this.objectToXML(child, name, nonSubNameSpace || nsPrefix, nsURI, false, null, null, nsContext);
+              value = this.objectToXML(child, name, nsPrefix, nsURI, false, null, null, nsContext);
             }
           } else {
-            value = this.objectToXML(child, name, nonSubNameSpace || nsPrefix, nsURI, false, null, null, nsContext);
+            if (Array.isArray(child)) {
+              if (emptyNonSubNameSpace) {
+                name = ':' + name;
+              } else {
+                name = nonSubNameSpace + name;
+              }
+            }
+
+            value = this.objectToXML(child, name, nsPrefix, nsURI, false, null, null, nsContext);
           }
         }
       }
